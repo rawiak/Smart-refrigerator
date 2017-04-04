@@ -1,0 +1,14 @@
+{% extends "refrigerator/base.html" %}
+
+{% block content %}
+  <h1>Kategorie: {{categories}}</h1>
+  <ul>
+    {% for product in products %}
+      <li>
+        {{product.name}} {{product.description}} {{product.price}}
+      </li>
+    {% empty %}
+      No Category
+    {% endfor %}
+  </ul>
+{% endblock %}

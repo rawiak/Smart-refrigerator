@@ -1,0 +1,14 @@
+{% extends "refrigerator/base.html" %}
+
+{% block content %}
+  <h2>W lodówce znajdują się:</h2>
+  <ul>
+    {% for product in products %}
+      <li>
+      <a href = '{% url 'product' id=product.id %}'>{{ product.name }}</a>
+      </li>
+      {% empty %}
+        Brak produktów
+    {% endfor %}
+  </ul>
+{% endblock %}#}

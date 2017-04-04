@@ -1,0 +1,10 @@
+{% extends "refrigerator/base.html" %}
+
+{% block content %}
+<h1>{{product.name}} <br/></h1>
+<h3>Ilość: {{product.quantity}}<br/>
+  Opis: {{product.description}}<br/>
+  Data ważności: {{product.expiration_date}}<br/>
+  Kategoria: {{product.category}}<br/>
+
+{% endblock %}
