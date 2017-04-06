@@ -20,13 +20,23 @@ from refrigerator.views import(
     AddProductView,
     ProductsView,
     ProductView,
+    ProductSearchView,
     CategoryView,
+    CategoriesView,
+    ModifyCategoryView,
+    AddCategoryView,
+    DeleteProductView,
     )
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', ProductsView.as_view(), name="products"),
-    url(r'^category/(?P<id>[-\w]+)/$', CategoryView.as_view(), name='category'),
+    url(r'^category/(?P<id>(\d)+)/$', CategoryView.as_view(), name='category'),
     url(r'^product/(?P<id>(\d)+)/$', ProductView.as_view(), name='product'),
     url(r'^add_product/$', AddProductView.as_view(), name='add-product'),
+    url(r'^categories/', CategoriesView.as_view(), name='categories'),
+    url(r'^product_search', ProductSearchView.as_view(), name='product-search'),
+    url(r'^add_category/$', AddCategoryView.as_view(), name='add-category'),
+    url(r'^modify_category/(?P<id>(\d)+)/$', ModifyCategoryView.as_view(), name='modify-category'),
+    url(r'^delete_product/(?P<id>\d+)', DeleteProductView.as_view(), name='delete-product'),
 ]

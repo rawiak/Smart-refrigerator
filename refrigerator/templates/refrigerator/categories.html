@@ -1,0 +1,16 @@
+{% extends "refrigerator/base.html" %}
+
+{% block content %}
+  <h2>Kategorie:</h2>
+  <ul>
+    {% for category in categories %}
+      <li>
+        <a href = '{% url 'category' id=category.id%}'>{{ category.category_name }}</a>
+        <a href = '{% url 'modify-category' id=category.id%}' type='button'>Edytuj</a>
+      </li>
+      {% empty %}
+        Brak kategorii
+    {% endfor %}
+  </ul>
+  <a href = '{% url "add-category" %}' type='button'>Dodaj kategorię</a>
+{% endblock %}

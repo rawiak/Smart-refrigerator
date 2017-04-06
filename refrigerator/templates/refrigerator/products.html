@@ -3,12 +3,19 @@
 {% block content %}
   <h2>W lodówce znajdują się:</h2>
   <ul>
+
+  <table>
+  <tr>
+    <th>Nazwa produktu</th>
+    <th>Data ważności</th>
+
+  </tr>
     {% for product in products %}
-      <li>
-      <a href = '{% url 'product' id=product.id %}'>{{ product.name }}</a>
-      </li>
-      {% empty %}
-        Brak produktów
-    {% endfor %}
-  </ul>
-{% endblock %}#}
+    <tr>
+      <td><a href = '{% url 'product' id=product.id %}'>{{ product.name }}</a></td>
+      <td>{{product.expiration_date}}</td>
+
+    </tr>
+  {% endfor %}
+
+{% endblock %}

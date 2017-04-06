@@ -1,11 +1,12 @@
 {% extends "refrigerator/base.html" %}
 
 {% block content %}
-<h2>Dodaj produkt:</h2>
-  <form action='{% url "add-product" %}' method='POST'>
+<h2>Stwórz kategorię:</h2>
+  <form action='{% url "add-category" %}' method='POST'>
     {% csrf_token %}
       {{form.as_ul}}
-    <input type='submit' value='+'>
+    <input type='submit' value='DODAJ'>
   </form>
+
 
 {% endblock %}

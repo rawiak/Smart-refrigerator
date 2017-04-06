@@ -1,0 +1,12 @@
+{% extends "refrigerator/base.html" %}
+
+
+{% block content %}
+  <form action='{% url "product-search" %}' method = 'post'>
+    {% csrf_token %}
+    {{ form }}<br/>
+    <input type = 'submit' values='Szukaj'/>
+  </form>
+    {% block results %}
+    {% endblock %}
+{% endblock %}
