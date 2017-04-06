@@ -1,0 +1,18 @@
+{% extends "refrigerator/base.html" %}
+
+{% block content %}
+<h2>Na co masz ochotę?</h2>
+  <form action='{% url "recipes-breakfast" %}' method='POST'>
+    {{form}}
+    <input type='submit' value='Śniadanie'>
+  </form></br>
+  <form action='{% url "recipes-dinner" %}' method='POST'>
+    <input type='submit' value='Obiad'>
+  </form></br>
+  <form action='{% url "recipes-supper" %}' method='POST'>
+    <input type='submit' value='Kolacja'>
+  </form></br>
+  <form action='{% url "add-recipes" %}' method='POST'>
+    <input type='submit' value='DODAJ NOWY PRZEPIS'>
+  </form></br>
+{% endblock %}

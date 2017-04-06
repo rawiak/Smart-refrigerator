@@ -1,5 +1,5 @@
 {% extends "refrigerator/product_search.html" %}
-{% block results %}
+{% block content %}
   <ol>
     {% for product in results %}
       <a href = '{% url 'product' id=product.id %}'>{{ product.name }}</a>

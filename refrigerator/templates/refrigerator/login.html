@@ -1,0 +1,7 @@
+{% extends "refrigerator/base.html" %}
+{% block content %}
+  <form action='' method = 'post'>
+    {% csrf_token %}
+    {{ form }} <input type = 'submit' value='LOGUJ'>
+  </form>
+{% endblock %}

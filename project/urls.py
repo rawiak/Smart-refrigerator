@@ -26,6 +26,14 @@ from refrigerator.views import(
     ModifyCategoryView,
     AddCategoryView,
     DeleteProductView,
+    RecipesView,
+    RecipesDinnerView,
+    RecipesSupperView,
+    RecipesBreakfastView,
+    AddRecipesView,
+    LoginView,
+    LogoutView,
+    RegisterProfileView
     )
 
 urlpatterns = [
@@ -38,5 +46,15 @@ urlpatterns = [
     url(r'^product_search', ProductSearchView.as_view(), name='product-search'),
     url(r'^add_category/$', AddCategoryView.as_view(), name='add-category'),
     url(r'^modify_category/(?P<id>(\d)+)/$', ModifyCategoryView.as_view(), name='modify-category'),
-    url(r'^delete_product/(?P<id>\d+)', DeleteProductView.as_view(), name='delete-product'),
+    url(r'^delete_product/(?P<id>(\d)+)/$', DeleteProductView.as_view(), name='delete-product'),
+    url(r'^recipes_breakfast/$', RecipesBreakfastView.as_view(), name='recipes-breakfast'),
+    url(r'^recipes_dinner/$', RecipesDinnerView.as_view(), name='recipes-dinner'),
+    url(r'^recipes_supper/$', RecipesSupperView.as_view(), name='recipes-supper'),
+    url(r'^recipes/$', RecipesView.as_view(), name='recipes'),
+    url(r'^add_recipes/$', AddRecipesView.as_view(), name='add-recipes'),
+
+    url(r'^register/', RegisterProfileView.as_view(), name='register-profile'),
+    url(r'^login', LoginView.as_view(), name='login'),
+    url(r'^logout', LogoutView.as_view(), name='logout'),
+
 ]

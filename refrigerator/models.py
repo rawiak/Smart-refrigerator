@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from django.urls import reverse
 from .validators import valid_range
 
@@ -20,3 +20,10 @@ class Product(models.Model):
 
     def __str__(self):
         return '{}-{}/ data ważności:{}'.format(self.name,self.category, self.expiration_date)
+
+class Recipes(models.Model):
+    name = models.CharField(max_length=128)
+    quantity = models.ForeignKey(Product)
+
+class Profile(AbstractUser):
+    pass

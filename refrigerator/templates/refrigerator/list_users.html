@@ -1,0 +1,23 @@
+
+<!doctype html>
+
+<html>
+<head><meta charset="utf-8"></head>
+<body>
+  <table>
+    <tr>
+      <th>Username</th>
+      <th>Imię</th>
+      <th>Nazwisko</th>
+    </tr>
+      {% for user in users %}
+      <tr>
+        <td>{{user.username}}</td>
+        <td>{{user.student.first_name}}</td>
+        <td>{{user.student.last_name}}</td>
+      </tr>
+    {% endfor %}
+
+  </table>
+</body>
+</html>

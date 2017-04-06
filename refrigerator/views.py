@@ -2,25 +2,27 @@ from django.views import View
 from .models import Product, Category
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .forms import ProductForm, CategoryForm, SearchForm
+from .forms import ProductForm, CategoryForm, SearchForm, AuthForm, RegisterProfileForm
 from django.views.generic.edit import FormView, CreateView, DeleteView, UpdateView
 from django.urls import reverse, reverse_lazy
+from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class ProductsView(View):
+class ProductsView(LoginRequiredMixin, View):
 
     def get(self, request):
         products = Product.objects.all().order_by('name')
         ctx = {'products':products}
         return render(request, 'refrigerator/products.html', ctx)
 
-class ProductView(View):
+class ProductView(LoginRequiredMixin, View):
 
     def get(self, request, id):
         product=Product.objects.get(pk=id)
         ctx = {'product': product}
         return render(request, 'refrigerator/product.html', ctx)
 
-class CategoryView(View):
+class CategoryView(LoginRequiredMixin, View):
 
     def get(self, request, id):
         category = Category.objects.get(pk=id)
@@ -29,7 +31,7 @@ class CategoryView(View):
                 'products': products}
         return render(request, 'refrigerator/category.html', ctx)
 
-class CategoriesView(View):
+class CategoriesView(LoginRequiredMixin, View):
 
     def get(self, request):
         categories = Category.objects.all().order_by('category_name')
@@ -37,7 +39,7 @@ class CategoriesView(View):
         return render(request, 'refrigerator/categories.html', ctx)
 
 
-class ProductSearchView(View):
+class ProductSearchView(LoginRequiredMixin, View):
 
     def get(self, request):
         ctx = {'form': SearchForm()}
@@ -53,7 +55,7 @@ class ProductSearchView(View):
 
         return render(request,'refrigerator/product_result.html', ctx)
 
-class ModifyCategoryView(View):
+class ModifyCategoryView(LoginRequiredMixin, View):
 
     def get(self, request, id):
         category=Category.objects.get(id=id)
@@ -78,7 +80,7 @@ class ModifyCategoryView(View):
 
         return render(request,'refrigerator/categories.html', ctx)
 
-class AddProductView(View):
+class AddProductView(LoginRequiredMixin, View):
     def get(self, request):
         ctx = {'form': ProductForm()}
         return render(request, 'refrigerator/add_product.html', ctx)
@@ -110,7 +112,7 @@ class AddProductView(View):
 
         return render(request,'refrigerator/add_product.html', ctx)
 
-class AddCategoryView(View):
+class AddCategoryView(LoginRequiredMixin, View):
 
     def get(self, request):
         form = CategoryForm()
@@ -130,6 +132,63 @@ class AddCategoryView(View):
 
         return render(request,'refrigerator/categories.html', ctx)
 
-class DeleteProductView(DeleteView):
-    model = Product
-    success_url = reverse_lazy ('products')
+class DeleteProductView(LoginRequiredMixin, View):
+    pass
+
+class RecipesView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        products = Product.objects.all().order_by('name')
+        ctx = {'products':products}
+        return render(request, 'refrigerator/recipes.html', ctx)
+
+class RecipesDinnerView(LoginRequiredMixin, View):
+    pass
+class RecipesSupperView(LoginRequiredMixin, View):
+    pass
+class RecipesBreakfastView(LoginRequiredMixin, View):
+    pass
+class AddRecipesView(LoginRequiredMixin, View):
+    pass
+
+
+class RegisterProfileView(View):
+
+    def get(self, request):
+        form = RegisterProfileForm()
+        ctx = {'form':form}
+        return render(request, 'refrigerator/register_profile_form.html', ctx)
+
+    def post(self, request):
+        form = RegisterProfileForm(data=request.POST)
+        ctx = {'form':form}
+        if form.is_valid():
+            profile = form.save()
+            login(request, profile)
+            return HttpResponseRedirect(reverse('products'))
+        else:
+            return render(request, 'refrigerator/register_profile_form.html', ctx)
+
+
+class LoginView(View):
+    def get(self, request):
+        form = AuthForm()
+        ctx={'form':AuthForm()}
+        return render(request, 'refrigerator/login.html', ctx)
+
+    def post(self, request):
+        form = AuthForm(data = request.POST)
+        ctx = {'form':form}
+        if form.is_valid():
+            user = form.cleaned_data['user']
+            login(request, user)
+            return HttpResponseRedirect(reverse('products'))
+        else:
+            return render(request, 'refrigerator/login.html', ctx)
+
+class LogoutView(View):
+
+    def get(self, request):
+        request.user.is_authenticated
+        logout(request)
+        return HttpResponseRedirect(reverse('login'))

@@ -1,15 +1,19 @@
+{% load static %}
+
 <!doctype html>
 
 <html>
 <head><meta charset="utf-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
-<body>
+<body background="{% static 'foto.jpg'%}"/>
+
   <nav class="navbar navbar-default">
-  <div class="container-fluid">
+    {% if user.is_authenticated %}
+  <div class="container-fluid", style = 'font-size:130%'>
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <a class="navbar-brand" href="http://127.0.0.1:8000/">CO MY TU MAMY</a>
+      <a class="navbar-brand" href="http://127.0.0.1:8000/">LODÓWKA</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -17,20 +21,34 @@
       <ul class="nav navbar-nav">
 
         <li><a href="http://127.0.0.1:8000/add_product/">DODAJ</a></li>
-        <li><a href="http://127.0.0.1:8000/delete_product/">WYJMIJ</a></li>
         <li><a href="http://127.0.0.1:8000/categories/">KATEGORIE</a></li>
+        <li><a href="http://127.0.0.1:8000/recipes/">POTRAWY</a></li>
+        <li><a href="http://127.0.0.1:8000/product_search/">SZUKAJ</a></li>
         <li class="dropdown">
-      <form class="navbar-form navbar-left">
-           <div class="form-group">
-              <input type="text" class="form-control" placeholder="Co by tu zjeść...">
-           </div>
-           <button type="submit" class="btn btn-default">SZUKAJ</button>
-       </form>
+
+
+       {% block search %}
+       {% endblock %}
 
     </div><!-- /.navbar-collapse -->
+    {% else %}
+
+    {% endif %}
+
   </div><!-- /.container-fluid -->
+  <div style = 'float:right; width:200px; font-size:150%; font color='black''>
+  {% if user.is_authenticated %}
+    <strong>Zalogowany:</strong>{{ user }} <a href="{% url 'logout' %}">Wyloguj</a>
+  {% else %}
+    <a href="{% url 'login' %}">Zaloguj</a>
+  {% endif %}
+   </div>
 </nav>
+
+<div style = 'font-size:130%'>
   {% block content %}
   {% endblock %}
+</div>
+  <br>
 </body>
 </html>

@@ -1,0 +1,14 @@
+{% extends "refrigerator/base.html" %}
+
+{% block content %}
+  <form action = {% url 'user-profile' %} method = 'post'>
+    {% csrf_token %}
+    <ol>
+      {% for error in form.non_field_errors %}
+        <li>{{error}}</li>
+      {% endfor %}
+    </ol>
+    {{form.as_ul}}
+    <input type = 'submit' value='Validate'/>
+  </form>
+{% endblock %}
