@@ -1,7 +1,7 @@
 {% extends "refrigerator/base.html" %}
 
 {% block content %}
-<h2>Stwórz kategorię:</h2>
+<h2>Stwórz kategorię</h2>
   <form action='{% url "add-category" %}' method='POST'>
     {% csrf_token %}
       {{form.as_ul}}

@@ -2,7 +2,7 @@
 {% block content %}
   <ol>
     {% for product in results %}
-      <a href = '{% url 'product' id=product.id %}'>{{ product.name }}</a>
+      <li><a href = '{% url 'product' id=product.id %}'>{{ product.name }}</a></li>
     {% empty %}
       W lodówce nie ma takiego produktu
     {% endfor %}

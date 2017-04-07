@@ -6,9 +6,10 @@
 
   <table>
   <tr>
-    <th>Nazwa produktu</th>
-    <th>Ilość</th>
-    <th>Data ważności</th>
+    <th>Nazwa produktu &nbsp;&nbsp;&nbsp;&nbsp;</th>
+    <th>Ilość &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+    <th>Data ważności &nbsp;&nbsp;&nbsp;&nbsp;  </th>
+    <th>Ile dni zostało </th>
 
   </tr>
     {% for product in products %}
@@ -17,10 +18,9 @@
       </td>
       <td>{{product.quantity}}</td>
       <td>{{product.expiration_date}}</td>
-      <td><form action='' method='POST'>
+      <td></td>
 
-        <input type='submit' value='WYJMIJ'>
-      </form></td>
+      <td>
     </tr>
 
   {% endfor %}

@@ -38,7 +38,7 @@ from refrigerator.views import(
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', ProductsView.as_view(), name="products"),
+    url(r'^$', ProductsView.as_view(), name=""),
     url(r'^category/(?P<id>(\d)+)/$', CategoryView.as_view(), name='category'),
     url(r'^product/(?P<id>(\d)+)/$', ProductView.as_view(), name='product'),
     url(r'^add_product/$', AddProductView.as_view(), name='add-product'),

@@ -5,6 +5,11 @@
 <h3>Ilość: {{product.quantity}}<br/>
   Opis: {{product.description}}<br/>
   Data ważności: {{product.expiration_date}}<br/>
+  Pozostało czasu {{date}}
   Kategoria: {{product.category}}<br/>
 
+  <form action='{% url 'product' id=product.id %}' method='POST'>
+    {% csrf_token %}
+    <input type='submit' name='wyjmij' value='WYJMIJ'>
+  </form>
 {% endblock %}

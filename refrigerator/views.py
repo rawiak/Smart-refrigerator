@@ -1,26 +1,50 @@
 from django.views import View
 from .models import Product, Category
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from .forms import ProductForm, CategoryForm, SearchForm, AuthForm, RegisterProfileForm
 from django.views.generic.edit import FormView, CreateView, DeleteView, UpdateView
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from datetime import datetime, timedelta, date
 
 class ProductsView(LoginRequiredMixin, View):
 
     def get(self, request):
-        products = Product.objects.all().order_by('name')
+        products = Product.objects.all().order_by('expiration_date')
+
         ctx = {'products':products}
         return render(request, 'refrigerator/products.html', ctx)
+
+
+
+
 
 class ProductView(LoginRequiredMixin, View):
 
     def get(self, request, id):
         product=Product.objects.get(pk=id)
-        ctx = {'product': product}
+        date_now = date.today()
+        end_date = product.expiration_date
+        date = date_now - end_date
+        ctx = {'product': product,
+                'date':date}
         return render(request, 'refrigerator/product.html', ctx)
+
+    def post(self, request, id):
+        product = Product.objects.get(pk=id)
+        form = ProductForm(data = request.POST)
+        ctx = {'product': product}
+        if request.POST.get('wyjmij'):
+            if product.quantity == 1:
+                product.delete()
+                return HttpResponseRedirect('/')
+            else:
+                product.quantity = product.quantity - 1
+                product.save()
+                return render(request,'refrigerator/product.html', ctx)
+
 
 class CategoryView(LoginRequiredMixin, View):
 
@@ -165,7 +189,7 @@ class RegisterProfileView(View):
         if form.is_valid():
             profile = form.save()
             login(request, profile)
-            return HttpResponseRedirect(reverse('products'))
+            return HttpResponseRedirect('/')
         else:
             return render(request, 'refrigerator/register_profile_form.html', ctx)
 
@@ -182,7 +206,7 @@ class LoginView(View):
         if form.is_valid():
             user = form.cleaned_data['user']
             login(request, user)
-            return HttpResponseRedirect(reverse('products'))
+            return HttpResponseRedirect('/')
         else:
             return render(request, 'refrigerator/login.html', ctx)
 
